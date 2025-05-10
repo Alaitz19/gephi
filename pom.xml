@@ -125,6 +125,8 @@
 
     <!-- Properties -->
     <properties>
+     <sonar.organization>alaitz19</sonar.organization>
+  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
         <gephi.build.timestamp>${maven.build.timestamp}</gephi.build.timestamp>
         
@@ -1143,6 +1145,37 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+  <id>coverage</id>
+  <build>
+   <plugins>
+    <plugin>
+      <groupId>org.jacoco</groupId>
+     <artifactId>jacoco-maven-plugin</artifactId>
+      <version>0.8.7</version>
+      <executions>
+        <execution>
+          <id>prepare-agent</id>
+          <goals>
+            <goal>prepare-agent</goal>
+          </goals>
+        </execution>
+        <execution>
+          <id>report</id>
+          <goals>
+            <goal>report</goal>
+          </goals>
+          <configuration>
+            <formats>
+              <format>XML</format>
+            </formats>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+   </plugins>
+  </build>
+</profile>
 
         <!-- Enables GPG and NBM signing, to be used alongside deployment profile -->
         <profile>

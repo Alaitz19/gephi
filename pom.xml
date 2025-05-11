@@ -972,7 +972,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <argLine>--add-opens java.base/java.net=ALL-UNNAMED</argLine>
-                    <skipTests>true</skipTests>
+                    <skipTests>false</skipTests>
                     <trimStackTrace>false</trimStackTrace>                                                              
                 </configuration>
             </plugin>
@@ -1081,6 +1081,25 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.8.11</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>prepare-agent</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+                <goal>report</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
 
             <!-- Checkstyle configuration -->
             <plugin>
@@ -1145,44 +1164,7 @@
                 </plugins>
             </build>
         </profile>
-<profile>
-    <id>coverage</id>
-    <build>
-        <plugins>
-            <!-- JaCoCo plugin configuration -->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version>
-                <executions>
-                    <!-- Prepare agent for code coverage during tests -->
-                    <execution>
-                        <id>prepare-agent</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
 
-                    <!-- Generate code coverage report after tests -->
-                    <execution>
-                        <id>report</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <formats>
-                                <format>XML</format> <!-- This format can be used with other tools (like Jenkins) -->
-                                <format>HTML</format> <!-- HTML format for human-readable reports -->
-                            </formats>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-</profile>
 
         <!-- Enables GPG and NBM signing, to be used alongside deployment profile -->
         <profile>
